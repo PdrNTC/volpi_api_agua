@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'volpi_api_agua', # Adicionando o APP
     'rest_framework',
+    'corsheaders', # liberar acesso api
 ]
 
 MIDDLEWARE = [
@@ -49,7 +50,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+# Permitir todos os domínios 
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'setup.urls'
 
