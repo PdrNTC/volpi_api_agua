@@ -11,7 +11,7 @@ class Usuario(models.Model):
 class AguaIngerida(models.Model):
     # Relacionando o usuário como chave estrangeira, e caso for deletado apagar em ambos models #
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    qtd_agua = models.IntegerField(help_text="Informe a quantidade de água ingerida em ML")
+    qtd_agua = models.IntegerField(help_text="Informe a quantidade de água ingerida em ML.")
     data = models.DateField(auto_now_add=True)
 
     def meta_diaria(self):
