@@ -27,8 +27,9 @@ class UsuarioSerializer(serializers.ModelSerializer):
         return self.get_meta_diaria(obj) - self.get_total_agua_ingerida(obj)
 
 class AguaIngeridaSerializer(serializers.ModelSerializer):
+    nome_usuario = serializers.CharField(source='usuario.nome', read_only=True)
     class Meta:
         model = AguaIngerida
-        fields = ['id', 'usuario', 'qtd_agua', 'data', 'meta_diaria', 'total_agua_ingerida', 'quantidade_faltante']
+        fields = ['id', 'usuario', 'nome_usuario', 'qtd_agua', 'data', 'meta_diaria', 'total_agua_ingerida', 'quantidade_faltante']
         #fields = '__all__' # Não estava retornando os gets #
  
