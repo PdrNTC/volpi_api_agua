@@ -13,17 +13,15 @@ class UsuarioSerializer(serializers.ModelSerializer):
         fields = ['id', 'nome', 'peso', 'meta_diaria', 'total_agua_ingerida', 'quantidade_faltante']
 
     def get_meta_diaria(self, obj):
-        # Calcula a meta diária com base no peso do usuário
         return obj.peso * 35
 
     def get_total_agua_ingerida(self, obj):
-        # Calcula a quantidade total de água ingerida hoje data atual
-        today = timezone.now().date()
-        total = AguaIngerida.objects.filter(usuario=obj, data=today).aggregate(total=Sum('qtd_agua'))['total'] or 0
+        data = self.context.get('data', timezone.now().date())  # Obtém a data do contexto
+        total = AguaIngerida.objects.filter(usuario=obj, data=data).aggregate(total=Sum('qtd_agua'))['total'] or 0
         return total
-    
+
+
     def get_quantidade_faltante(self, obj):
-        # Calcula quanto falta para atingir a meta diária subtraindo a meta pela ingestão
         return self.get_meta_diaria(obj) - self.get_total_agua_ingerida(obj)
 
 class AguaIngeridaSerializer(serializers.ModelSerializer):
@@ -31,5 +29,9 @@ class AguaIngeridaSerializer(serializers.ModelSerializer):
     class Meta:
         model = AguaIngerida
         fields = ['id', 'usuario', 'nome_usuario', 'qtd_agua', 'data', 'meta_diaria', 'total_agua_ingerida', 'quantidade_faltante']
-        #fields = '__all__' # Não estava retornando os gets #
+
+    # def create(self, validated_data):
+    #     agua_ingerida = AguaIngerida.objects.create(**validated_data)
+    #     return agua_ingerida
+
  

@@ -1,5 +1,7 @@
 from django.db import models
 from django.db.models import Sum
+from django.utils import timezone
+
 class Usuario(models.Model):
     nome = models.CharField(max_length=100)
     peso = models.FloatField(help_text="Informe seu peso em KG")
@@ -12,8 +14,8 @@ class AguaIngerida(models.Model):
     # Relacionando o usuário como chave estrangeira, e caso for deletado apagar em ambos models #
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     qtd_agua = models.IntegerField(help_text="Informe a quantidade de água ingerida em ML.")
-    #data = models.DateField(default=timezone.now)  # Agora permite data customizada
-    data = models.DateField(auto_now_add=True)
+    data = models.DateField(default=timezone.now)  # Agora permite data customizada
+    #data = models.DateField(auto_now_add=True)
 
 
     def meta_diaria(self):

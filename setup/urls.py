@@ -7,7 +7,7 @@ from rest_framework import routers
 # Criando Objeto Router #
 router = routers.DefaultRouter()
 router.register('usuarios', UsuarioViewSet, basename='Usuarios') 
-router.register('agua_ingerida', AguaIngeridaViewSet) 
+router.register('agua_ingerida', AguaIngeridaViewSet, basename='agua_ingerida') 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
