@@ -24,14 +24,20 @@ class UsuarioSerializer(serializers.ModelSerializer):
     def get_quantidade_faltante(self, obj):
         return self.get_meta_diaria(obj) - self.get_total_agua_ingerida(obj)
 
-class AguaIngeridaSerializer(serializers.ModelSerializer):
-    nome_usuario = serializers.CharField(source='usuario.nome', read_only=True)
+
+class AguaIngeridaCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = AguaIngerida
-        fields = ['id', 'usuario', 'nome_usuario', 'qtd_agua', 'data', 'meta_diaria', 'total_agua_ingerida', 'quantidade_faltante']
+        fields = ['usuario', 'qtd_agua', 'data']
 
-    # def create(self, validated_data):
-    #     agua_ingerida = AguaIngerida.objects.create(**validated_data)
-    #     return agua_ingerida
 
- 
+class AguaIngeridaSerializer(serializers.ModelSerializer):
+    data = serializers.DateField()
+    total_agua = serializers.IntegerField()
+    meta_diaria = serializers.IntegerField()
+    atingiu_meta = serializers.BooleanField()
+    nome_usuario = serializers.CharField()
+    peso_usuario = serializers.FloatField()  # Novo campo para exibir o peso do usuário
+    class Meta:
+        model = AguaIngerida
+        fields = ['data', 'total_agua', 'meta_diaria', 'atingiu_meta', 'nome_usuario', 'peso_usuario']
