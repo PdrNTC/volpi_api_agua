@@ -4,7 +4,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from django.utils import timezone
 from django.db.models import Sum, F, BooleanField,When, Case
-from django.db.models.functions import Coalesce
+
 
 class UsuarioViewSet(viewsets.ModelViewSet):
     queryset = Usuario.objects.all() #Retornando todos os campos
@@ -34,7 +34,6 @@ class AguaIngeridaViewSet(viewsets.ModelViewSet):
                 peso_usuario=F('usuario__peso')
             ).order_by('data')
 
-            # Adicionar a lógica de atingiu_meta
             queryset = queryset.annotate(
                 atingiu_meta=Case(
                     When(total_agua__gte=F('meta_diaria'), then=True),
