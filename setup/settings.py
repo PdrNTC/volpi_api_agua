@@ -40,7 +40,19 @@ INSTALLED_APPS = [
     'volpi_api_agua', # Adicionando o APP
     'rest_framework',
     'corsheaders', # liberar acesso api
+    'django_q',
 ]
+
+## Configs para o DJANGO-Q ##
+Q_CLUSTER = {
+    'name': 'DjangoQ',
+    'workers': 4,
+    'recycle': 500,
+    'timeout': 60,
+    'queue_limit': 50,
+    'bulk': 10,
+    'orm': 'default',  # Usando ORM do Django como broker ou configure Redis
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -128,3 +140,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Configs para o CELERY #
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'

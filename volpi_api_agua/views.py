@@ -1,10 +1,11 @@
 from volpi_api_agua.models import Usuario, AguaIngerida
 from volpi_api_agua.serializers import UsuarioSerializer, AguaIngeridaSerializer, AguaIngeridaCreateSerializer
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from django.utils import timezone
 from django.db.models import Sum, F, BooleanField,When, Case
-
+from django_q.tasks import async_task  # Importar Django-Q para tarefas assíncronas
 
 class UsuarioViewSet(viewsets.ModelViewSet):
     queryset = Usuario.objects.all() #Retornando todos os campos
@@ -48,3 +49,15 @@ class AguaIngeridaViewSet(viewsets.ModelViewSet):
         queryset = self.get_queryset()
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+    
+## VIEW para gerar o pdf no endpoint 'gerar-pdf' ##
+class GerarPDFView(APIView):
+    def post(self, request, *args, **kwargs):
+        usuario_id = request.data.get('usuario_id')
+        if not usuario_id:
+            return Response({"error": "ID do usuário é obrigatório"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Enfileirar a tarefa assíncrona para gerar o PDF usando Django-Q
+        async_task('volpi_api_agua.tasks.gerar_pdf_historico_usuario', usuario_id)
+
+        return Response({"message": "PDF sendo gerado, você será notificado quando estiver pronto."}, status=status.HTTP_200_OK)

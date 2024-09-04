@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models import Sum
 from django.utils import timezone
-from rest_framework import serializers
+
 class Usuario(models.Model):
     nome = models.CharField(max_length=100)
     peso = models.FloatField(help_text="Informe seu peso em KG")
