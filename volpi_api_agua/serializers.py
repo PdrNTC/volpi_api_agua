@@ -22,13 +22,24 @@ class UsuarioSerializer(serializers.ModelSerializer):
 
 
     def get_quantidade_faltante(self, obj):
-        return self.get_meta_diaria(obj) - self.get_total_agua_ingerida(obj)
+        ### GET que retorna a QTD_FALTANTE ###
+        ## Função MAX retorna maior valor entre dois argumentos, se for negativo irá retornar 0 ##
+        qtd_faltante = self.get_meta_diaria(obj) - self.get_total_agua_ingerida(obj)
+        return max(qtd_faltante, 0)
 
 
 class AguaIngeridaCreateSerializer(serializers.ModelSerializer):
+    ## Serializer responsável por criar com as datas fornecidas ##
     class Meta:
         model = AguaIngerida
         fields = ['usuario', 'qtd_agua', 'data']
+
+    ### Função com nome específico do DRF para validar a data e não permitir no futuro ###
+    def validate_data(self, data):
+        # Validar se a data fornecida é maior que a data atual #
+        if data > timezone.now().date():
+            raise serializers.ValidationError("A data não pode ser no futuro.")
+        return data
 
 
 class AguaIngeridaSerializer(serializers.ModelSerializer):
