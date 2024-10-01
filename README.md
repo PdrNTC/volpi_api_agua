@@ -1,6 +1,6 @@
 # Volpi water App 💧 
 
- API Backend para um app  para Lembrar de Beber Água 📱, que possibilita aos usuários registrarem o consumo diário de água, monitorar metas com base no seu peso, e realizar operações de login e atualização de dados.
+ API Backend para um app  para Lembrar de Beber Água 📱, que possibilita aos usuários registrarem o consumo diário de água, monitorar metas com base no seu peso, e realizar operações de login, cadastro de novos usuários e extração de relatórios em PDF.
 
 ***Para acessar o Front End dessa aplicação: [Clique aqui](https://github.com/PdrNTC/volpi_app_agua_react)***
 
