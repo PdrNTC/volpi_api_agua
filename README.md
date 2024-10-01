@@ -6,7 +6,7 @@
 
 <br />
 
-* ***Apresentação do uso da API com o Front End*** => Obs: Vídeo desatualizado! [Clique aqui](#) e confira a proposta do projeto.
+* ***Apresentação do uso da API com o Front End*** => [Clique aqui](#) e confira a proposta do projeto.
 
 ## Ferramentas utilizadas 🛠 
 - Python <img align="center" alt="python" height="30" width="40" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg">
